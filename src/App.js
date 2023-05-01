@@ -11,18 +11,34 @@ import ShoppingCart from "./components/ShoppingCart";
 
 function App() {
   const [products, setProducts] = React.useState(data);
-  const [cart, setCart] = React.useState([]);
+  const [cart, setCart] = React.useState(() => initialStateOku("cart"));
 
+  function localStorageYaz(cart) {
+    return localStorage.setItem("cart", JSON.stringify(cart));
+  }
+  function localStorageOku(key) {
+    return JSON.parse(localStorage.getItem(key));
+  }
+  function initialStateOku(key) {
+    const initialCart = localStorageOku(key);
+    if (initialCart) {
+      return initialCart;
+    } else {
+      return [];
+    }
+  }
   const addItem = (item) => {
     // verilen itemi sepete ekleyin
     const newCart = [...cart, item];
     setCart(newCart);
+    localStorageYaz(newCart);
   };
 
   const removeItem = (id) => {
     // verilen id'ye sahip öğeyi sepetten kaldır
-    const newCart = cart.filter((item) => item.id !== id);
+    const newCart = [...cart.filter((item) => item.id !== id)];
     setCart(newCart);
+    localStorageYaz(newCart);
   };
 
   return (
