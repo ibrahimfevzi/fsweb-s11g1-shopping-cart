@@ -13,23 +13,9 @@ function App() {
 
   const addItem = (item) => {
     // verilen itemi sepete ekleyin
-    // item'in sepette olup olmadığını kontrol et
-    const existingItemIndex = cart.findIndex(
-      (cartItem) => cartItem.id === item.id
-    );
-
-    // item sepette ise miktarını 1 artır
-    if (existingItemIndex !== -1) {
-      const updatedCart = [...cart];
-      updatedCart[existingItemIndex].quantity += 1;
-      setCart(updatedCart);
-    } else {
-      // item sepette değilse miktarını 1 yaparak sepete ekle
-      const updatedCart = [...cart, { ...item, quantity: 1 }];
-      setCart(updatedCart);
-    }
+    const newCart = [...cart, item];
+    setCart(newCart);
   };
-
   return (
     <div className="App">
       <Navigation cart={cart} />
